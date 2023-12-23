@@ -3,8 +3,8 @@ pipeline{
         label "Jenkins-slave"
     }
     tools{
-        jdk:'Java17',
-        maven:'Maven3'
+        jdk 'Java17',
+        maven 'Maven3'
     }
     stages{
         // ensures that there are no residual artifacts or files from previous build
