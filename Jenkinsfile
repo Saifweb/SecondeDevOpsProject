@@ -34,13 +34,20 @@ pipeline{
             }
         }
         // sonaranalysis using maven cmd
-
        stage("SonarQube Analysis"){
            steps {
 	           script {
-		        withSonarQubeEnv(credentialsId: 'jenkins-sonarqube-token') { 
-                        sh "mvn sonar:sonar"
-		        }
+                    withSonarQubeEnv(credentialsId: 'jenkins-sonarqube-token') { 
+                            sh "mvn sonar:sonar"
+                    }
+	           }	
+           }
+       }
+       // Wait for the quality gate and continue even if it fails
+        stage("Quality Gate"){
+           steps {
+	           script {
+                    waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-sonarqube-token'
 	           }	
            }
        }
