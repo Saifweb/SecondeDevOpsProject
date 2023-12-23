@@ -26,12 +26,23 @@ pipeline{
                 sh "mvn clean package"
             }
         }
-        // build using maven
+        // test using maven
         // sh mean shell script 
         stage("Test the application"){
             steps {
                 sh "mvn test"
             }
+        }
+        // sonaranalysis using maven cmd
+        stage("SonarQube Analysis"){
+            steps{
+                scripts{
+                    withSonarQubeEnv(credentialsId: 'jenkins_sonarqube_token') {
+                        sh "mvn sonar:sonar"
+                    }
+                }
+            }
+
         }
     }
 }
