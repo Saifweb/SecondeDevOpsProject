@@ -34,15 +34,15 @@ pipeline{
             }
         }
         // sonaranalysis using maven cmd
-        stage("SonarQube Analysis"){
-            steps{
-                scripts{
-                    withSonarQubeEnv(credentialsId: 'jenkins_sonarqube_token') {
-                        sh "mvn sonar:sonar"
-                    }
-                }
-            }
 
-        }
+       stage("SonarQube Analysis"){
+           steps {
+	           script {
+		        withSonarQubeEnv(credentialsId: 'jenkins-sonarqube-token') { 
+                        sh "mvn sonar:sonar"
+		        }
+	           }	
+           }
+       }
     }
 }
