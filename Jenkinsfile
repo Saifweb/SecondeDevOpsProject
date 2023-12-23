@@ -19,5 +19,19 @@ pipeline{
                 git branch: 'main', credentialsId: 'github', url: 'https://github.com/Saifweb/SecondeDevOpsProject.git'
                 }
         }
+        // build using maven
+        // sh mean shell script 
+        stage("Build the application"){
+            steps {
+                sh "mvn clean package"
+            }
+        }
+        // build using maven
+        // sh mean shell script 
+        stage("Test the application"){
+            steps {
+                sh "mvn test"
+            }
+        }
     }
 }
