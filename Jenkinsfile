@@ -13,7 +13,7 @@ pipeline{
                 cleanWs()
             }
         }
-        //get the code from github repo
+        //get the code from github repo!!
         stage("Checkout from the SCM"){
             steps{
                 git branch: 'main', credentialsId: 'github', url: 'https://github.com/Saifweb/SecondeDevOpsProject.git'
