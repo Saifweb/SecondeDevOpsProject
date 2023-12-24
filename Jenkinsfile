@@ -8,7 +8,8 @@ pipeline{
     }
     // define paramaters :
     environment{
-        APP_NAME="SecondeDevOpsProject"
+        // the app name should be a lowercase otherwise the pipline will return an error 
+        APP_NAME="java_app"
         RELEASE="1.0.0"
         DOCKER_USER="saifbenhmida1420"
         DOCKER_PASS="dockerhub"
