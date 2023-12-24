@@ -6,6 +6,15 @@ pipeline{
         jdk 'java17'
         maven 'maven3'
     }
+    // define paramaters :
+    environment{
+        APP_NAME="SecondeDevOpsProject"
+        RELEASE="1.0.0"
+        DOCKER_USER="saifbenhmida1420"
+        DOCKER_HUB="dockerhub"
+        IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
+        IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
+    }
     stages{
         // ensures that there are no residual artifacts or files from previous build
         stage("Cleanup Workspace"){
@@ -50,6 +59,22 @@ pipeline{
                     waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-sonarqube-token'
 	           }	
            }
+       }
+       // you should  create your docker file in the project before using this step 
+        stage("Build and Push Docker Image"){
+            steps {
+                script {
+                    //build the image
+                    docker.withRegistry('',DOCKER_PASS) {
+                        docker_image = docker.build "${IMAGE_NAME}"
+                    }
+                    // push the image
+                    docker.withRegistry('',DOCKER_PASS) {
+                        docker_image.push("${IMAGE_TAG}")
+                        docker_image.push('latest')
+                    }
+                }
+            }
        }
     }
 }
