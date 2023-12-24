@@ -77,5 +77,13 @@ pipeline{
                 }
             }
        }
+       // scan the latest docker image using Trivy
+        stage("Trivy Scan") {
+           steps {
+               script {
+	            sh ('docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image saifbenhmida1420/java_app:latest --no-progress --scanners vuln  --exit-code 0 --severity HIGH,CRITICAL --format table')
+               }
+           }
+       }
     }
 }
