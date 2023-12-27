@@ -81,6 +81,8 @@ Find the deployment YAML files in the [GitHub repository]( https://github.com/Sa
 - **Maven**: Maven is a build automation tool used for managing the build lifecycle of a software project. It automates the build process, making it easier to compile source code, run tests, and package applications. This is crucial for achieving continuous integration.
 
 -  **Trivy**: Trivy is a container image vulnerability scanner. Its primary role is to identify security vulnerabilities in container images, helping enhance the security of containerized applications.
+## Results 
+![image](https://github.com/Saifweb/SecondeDevOpsProject/assets/98279240/a2dce3b4-a917-4239-936a-9f3debc2f0af)
 
 ## Jenkins Pipeline Results
 ![image](https://github.com/Saifweb/SecondeDevOpsProject/assets/98279240/a9980d6d-375c-437c-8952-3386c58b9c9d)
