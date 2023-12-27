@@ -15,6 +15,7 @@ pipeline{
         DOCKER_PASS="dockerhub"
         IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
         IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
+        JENKINS_API_TOKEN= credentials("JENKINS_API_TOKEN")
     }
     stages{
         // ensures that there are no residual artifacts or files from previous build
@@ -85,5 +86,20 @@ pipeline{
                }
            }
        }
+       // for space Optimization we are going to clean up the local copies of those images on the Jenkins agent  ( they are already pushed , builded and scaned on the dockerHub)
+       stage ('Cleanup Artifacts') {
+           steps {
+               script {
+                    sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
+                    sh "docker rmi ${IMAGE_NAME}:latest"
+               }
+          }
+       }
+       stage ('Triger Cd Pipline') {
+                script {
+                    sh "curl -v -k --user admin:${JENKINS_API_TOKEN} -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'http://34.71.214.45:8080/job/gitops-register-app-cd/buildWithParameters?token=gitops-token'"
+                }
+       }
+       
     }
 }
